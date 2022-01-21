@@ -1,0 +1,55 @@
+---
+- name: Synchronize clocks
+  hosts: all
+  remote_user: azureuser
+  become: yes
+
+  tasks:
+    - name: Updating
+      raw: apt-get update
+
+    - name: Finding the ID of the Hyper-V Time Synchronization device P1
+      get_url:
+        url: https://raw.githubusercontent.com/torvalds/linux/master/tools/hv/lsvmbus
+        dest: ./lsvmbus
+
+    - name: Finding the ID of the Hyper-V Time Synchronization device P2
+      shell: python lsvmbus -vv | grep -w "Time Synchronization" -A 3 | grep "Device_ID" | awk -F '{|}' '{print $2}' | tee /sys/bus/vmbus/drivers/hv_utils/unbind     
+      ignore_errors: yes 
+
+    - name: Install NTP package
+      apt:
+        name: ntp
+        state: present
+        update_cache: yes      
+
+    - name: Stoping ntp daemon
+      raw: service ntp stop
+
+    - name: Syncing the machine's clock with Google's NTP service
+      raw: ntpd -b time.google.com
+
+    - name: Commenting lines of servers
+      replace:
+        path: /etc/ntp.conf
+        regexp: '^server'
+        replace: '#server'
+
+    - name: Commenting lines of pools
+      replace:
+        path: /etc/ntp.conf
+        regexp: '^pool'
+        replace: '#pool'       
+
+    - name: Inserting  servers
+      lineinfile:
+        path: /etc/ntp.conf
+        line: "{{item}}"
+      with_items:
+        - server time1.google.com iburst
+        - server time2.google.com iburst
+        - server time3.google.com iburst
+        - server time4.google.com iburst
+
+    - name: Restarting ntp daemon
+      raw: service ntp stop
