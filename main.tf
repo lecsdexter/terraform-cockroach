@@ -15,7 +15,7 @@ module "network" {
   address_prefix_test  = "${var.address_prefix_test}"
 }
 
-module "nsg-test" {
+module "nsg" {
   source           = "./modules/networksecuritygroup"
   location         = "${var.location}"
   resource_group   = "${module.resource_group.resource_group_name}"
@@ -43,6 +43,7 @@ module "virtualmachine" {
   resource_group   = "${module.resource_group.resource_group_name}"  
   subnet_id        = "${module.network.subnet_id}"
   public_ip        = "${module.publicip.*.public_ip_address_id[count.index]}" 
+  nsg_id           = "${module.nsg.nsg_id}"
   index            = "${count.index}"
 }
 

@@ -49,10 +49,36 @@ resource "azurerm_lb_rule" "lb_rule1" {
   frontend_port                  = 26257
   backend_port                   = 26257
   frontend_ip_configuration_name = "PublicIPAddress-cockroach"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.example.id]
   //probe_id
 }
 
 resource "azurerm_lb_rule" "lb_rule2" {
+  resource_group_name            = "${var.resource_group}"
+  loadbalancer_id                = azurerm_lb.example.id
+  name                           = "lbrule-8080"
+  protocol                       = "Tcp"
+  frontend_port                  = 8080
+  backend_port                   = 8080
+  frontend_ip_configuration_name = "PublicIPAddress-cockroach"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.example.id]
+  //probe_id
+}
+
+
+resource "azurerm_lb_rule" "lb_rule3" {
+  resource_group_name            = "${var.resource_group}"
+  loadbalancer_id                = azurerm_lb.example.id
+  name                           = "lbrule-80"
+  protocol                       = "Tcp"
+  frontend_port                  = 80
+  backend_port                   = 80
+  frontend_ip_configuration_name = "PublicIPAddress-cockroach"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.example.id]
+  //probe_id
+}
+
+resource "azurerm_lb_rule" "lb_rule4" {
   resource_group_name            = "${var.resource_group}"
   loadbalancer_id                = azurerm_lb.example.id
   name                           = "lbrule-ssh"
@@ -60,6 +86,7 @@ resource "azurerm_lb_rule" "lb_rule2" {
   frontend_port                  = 22
   backend_port                   = 22
   frontend_ip_configuration_name = "PublicIPAddress-cockroach"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.example.id]
   //probe_id
 }
 

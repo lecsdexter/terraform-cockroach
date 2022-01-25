@@ -11,6 +11,11 @@ resource "azurerm_network_interface" "test" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "example" {
+  network_interface_id      = azurerm_network_interface.test.id
+  network_security_group_id = "${var.nsg_id}"
+}
+
 resource "azurerm_linux_virtual_machine" "test" {
   name                = "vm-cockroach-${var.index}"
   location            = "${var.location}"
