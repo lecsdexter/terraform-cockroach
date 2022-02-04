@@ -68,8 +68,18 @@ SHOW DATABASES;
 
 <!-- <In process...> -->
 
+<!-- ```sh
+az vm create --resource-group rg-dev-eastus-cockroach --name vm-workload --image UbuntuLTS --public-ip-sku Standard --admin-username azureuser --generate-ssh-keys 
+``` -->
+
+
 
 #### Destory the infraestructure
+
+<!-- ```sh
+az vm delete --resource-group rg-dev-eastus-cockroach --name vm-workload 
+``` -->
+
 ```sh
 terraform destroy -auto-approve
 ```
