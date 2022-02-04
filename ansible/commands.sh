@@ -1,1 +1,1 @@
-ansible-playbook ./ansible/playbook/playbook.yml -i ./ansible/inventory/inventory.in
+cd ansible; ansible-playbook ./playbook/playbook.yml -i ./inventory/inventory.in; cd ..
