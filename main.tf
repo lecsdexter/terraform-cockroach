@@ -45,6 +45,8 @@ module "virtualmachine" {
   public_ip        = "${module.publicip.*.public_ip_address_id[count.index]}" 
   nsg_id           = "${module.nsg.nsg_id}"
   index            = "${count.index}"
+  user             = "${var.username_vm}"
+  pwd              = "${var.pass_vm}"
 }
 
 
@@ -64,6 +66,8 @@ resource "local_file" "hosts_cfg"{
     content = templatefile("${path.module}/templates/hosts.tpl",
         {
             vm_ips = "${module.virtualmachine.*.vm_ip}"
+            users = "${var.username_vm}"
+            pwds = "${var.pass_vm}"
         }
     )
 

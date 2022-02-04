@@ -20,7 +20,7 @@ terraform apply -auto-approve
 
 #### Pre-configure each node 
 ```sh
-ansible-playbook ./ansible/playbook/playbook.yml -i ./ansible/inventory/inventory.in
+cd ansible; ansible-playbook ./playbook/playbook.yml -i ./inventory/inventory.in; cd ..
 ```
 
 ####Configure each node 

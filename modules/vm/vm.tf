@@ -23,11 +23,13 @@ resource "azurerm_linux_virtual_machine" "test" {
   // size                = "Standard_F2s_v2"
   size                = "Standard_DS1_v2"
   admin_username      = "azureuser"
+  admin_password      = "azureUser123*"
+  disable_password_authentication = false
   network_interface_ids = [azurerm_network_interface.test.id]
-  admin_ssh_key {
+/*   admin_ssh_key {
     username   = "azureuser"
     public_key = file("~/.ssh/id_rsa.pub")
-  }
+  } */
   os_disk {
     caching           = "ReadWrite"
     storage_account_type = "Standard_LRS"

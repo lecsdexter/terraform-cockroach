@@ -7,3 +7,6 @@ variable "subnet_id" {}
 variable "nsg_id" {}
 
 variable "index" {}
+
+variable "user" {}
+variable "pwd" {}

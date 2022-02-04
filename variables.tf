@@ -16,3 +16,5 @@ variable address_prefix_test {}
 
 # VMs
 variable number_virtual_machines {}
+variable username_vm {}
+variable pass_vm {}
